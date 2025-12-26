@@ -1,10 +1,17 @@
-node {
-    stage('Example Stage') {
-        echo 'Hello, Jenkins!'
-        // هنا ممكن تكتب أي أمر تاني، زي `sh 'python --version'` أو أي أمر تاني
-    }
+pipeline {
+    agent any
 
-    stage('Another Stage') {
-        echo 'This is another stage!'
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building...'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing...'
+            }
+        }
     }
 }
