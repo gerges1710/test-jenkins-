@@ -1,0 +1,62 @@
+pipeline {
+    agent any   // أي عامل/Node متاح
+
+    
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Cloning repository...'
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building the project...'
+                // لو مشروعك Java مثلا
+                // sh 'mvn clean install'
+                // لو مشروع Python مثلا
+                // sh 'pip install -r requirements.txt'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                // لو Java
+                // sh 'mvn test'
+                // لو Python
+                // sh 'pytest'
+            }
+            post {
+                always {
+                    echo 'Tests stage finished.'
+                    // ممكن تحط هنا Archive للـ test reports
+                    // junit '**/target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application...'
+                // هنا تحط خطوات النشر لو عندك
+                // مثال: sh 'scp ...'
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline finished successfully!'
+        }
+        failure {
+            echo 'Pipeline failed!'
+        }
+        always {
+            echo 'Pipeline finished.'
+            echo 'Pipeline done.'
+        }
+    }
+}
